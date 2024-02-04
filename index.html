@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="NT109Project.css" />
+  <title>Welcome to LIGHTNING</title>
+</head>
+
+<body>
+  <img class="wave" src="wave.png">
+  <div class="container">
+    <div class="img">
+      <img src="images.png">
+    </div>
+    <div class="login-content">
+      <form id="loginForm">
+        <img src="uitiot.png">
+        <h2 class="title">Welcome</h2>
+        <div class="input-div one">
+          <div class="i">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="div">
+            <input type="email" id="email" class="input" placeholder="Email">
+          </div>
+        </div>
+        <div class="input-div pass">
+          <div class="i"> 
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="div">
+            <input type="password" id="password" class="input" placeholder="Password">
+          </div>
+        </div>
+        <button type="button" id="signup_btn" class="btn">Sign Up</button>
+        <button type="submit" id="login_btn" class="btn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js"></script>
+  <script src="NT109.js" type="module"></script>
+
+  <script>
+    // Add your JavaScript code here
+    document.getElementById('signup_btn').addEventListener('click', function() {
+        // Redirect to signup page
+        window.location.href = 'DashBoard.html';
+    });
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+       apiKey: "AIzaSyDNZoYdZXvNT5BDR7-wsLyugSmSEj8YDi4",
+  authDomain: "ligh-4bda4.firebaseapp.com",
+  projectId: "ligh-4bda4",
+  storageBucket: "ligh-4bda4.appspot.com",
+  messagingSenderId: "128228232683",
+  appId: "1:128228232683:web:e3adcdd1ec56cd611f9dae",
+  measurementId: "G-ZZX0R6N1X4"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Sign in with email and password
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in successfully
+          const user = userCredential.user;
+          console.log('User signed in:', user);
+          window.location.href = 'LoginPage.html'; // Redirect to successful login page
+        })
+        .catch((error) => {
+          // Handle errors here
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error('Login error:', errorMessage);
+          alert('Incorrect email or password. Please try again.');
+        });
+    });
+  </script>
+</body>
+</html>
